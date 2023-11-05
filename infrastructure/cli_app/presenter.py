@@ -11,5 +11,5 @@ class CliPresenter(IOutputBoundary):
 
     def present(self, output: int) -> str:
         formatted_data: dict = {'result': str(output)}
-        view_obj: ICliView = self.view_factory.make_viev()
+        view_obj: ICliView = self.view_factory.make_view()
         return view_obj.render(formatted_data)

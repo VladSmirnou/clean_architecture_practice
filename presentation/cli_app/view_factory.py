@@ -4,5 +4,5 @@ from presentation.cli_app.view import CliView
 
 
 class ViewFactory(IViewFactory):
-    def make_viev(self) -> ICliView:
+    def make_view(self) -> ICliView:
         return CliView()
