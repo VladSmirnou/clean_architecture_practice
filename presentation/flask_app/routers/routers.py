@@ -1,12 +1,4 @@
 from flask import Blueprint, request
-# from infrastructure.flask_app.controller.controller import FlaskController
-# from infrastructure.flask_app.interfaces.controller_interface import \
-#     IFlaskController
-# from use_cases.use_case import UseCase
-# from infrastructure.flask_app.presenter.presenter import FlaskPresenter
-# from infrastructure.repository.postgres_repository import PostgresRepository
-# from presentation.db.postgres_db_connector import PostgresDbConnector
-# from presentation.db.postgres_db import SetupPostgresDb
 
 
 calculator_bprint: Blueprint = Blueprint('calculator_bprint', __name__)
