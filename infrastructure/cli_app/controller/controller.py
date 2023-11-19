@@ -10,7 +10,7 @@ class CliController(ICliController):
     def __init__(self, use_case: I_InputBoundary) -> None:
         self.use_case_obj = use_case
 
-    def process_data(self, data: dict) -> str:
+    def process_data(self, data: dict) -> dict:
         match data:
             case {'amount_of_results': _, 'tail_or_head_flag': _}:
                 return self.use_case_obj.retrieve_prev_calculations(
