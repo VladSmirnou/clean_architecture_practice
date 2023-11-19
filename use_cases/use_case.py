@@ -9,19 +9,19 @@
 from entities.entities import Calculator
 from use_cases.dto.input_dto import InputDto, InputDtoRetrieve
 from use_cases.dto.output_dto import OutputDto
-from use_cases.interfaces.cli_presenter_interface import IOutputBoundary
-from use_cases.interfaces.cli_use_case_interface import I_InputBoundary
-from use_cases.interfaces.cli_repo_interface import I_InMemoryRepository
+from use_cases.interfaces.presenter_interface import IOutputBoundary
+from use_cases.interfaces.use_case_interface import I_InputBoundary
+from use_cases.interfaces.repo_interface import IRepository
 
 
 class UseCase(I_InputBoundary):
     presenter: IOutputBoundary
-    repository: I_InMemoryRepository
+    repository: IRepository
     entity_obj: Calculator
 
     def __init__(self,
                  presenter: IOutputBoundary,
-                 repository: I_InMemoryRepository) -> None:
+                 repository: IRepository) -> None:
         self.presenter = presenter
         self.repository = repository
         self.entity_obj = self.make_entity_obj()
@@ -29,7 +29,7 @@ class UseCase(I_InputBoundary):
     def make_entity_obj(self) -> Calculator:
         return Calculator()
 
-    def calculate_result(self, input_dto: InputDto) -> str:
+    def calculate_result(self, input_dto: InputDto) -> dict:
         output: int = 0
         match input_dto.to_dict():
             case {'operator': '+', **rest}:
@@ -40,7 +40,7 @@ class UseCase(I_InputBoundary):
                 ...
         return self.presenter.present(OutputDto(output=output))
 
-    def calculate_result_and_save(self, input_dto: InputDto) -> str:
+    def calculate_result_and_save(self, input_dto: InputDto) -> dict:
         output: int = 0
         data: dict = input_dto.to_dict()
         match data:
@@ -54,8 +54,10 @@ class UseCase(I_InputBoundary):
                 ...
         return self.presenter.present(OutputDto(output=output))
 
-    def retrieve_prev_calculations(self, input_dto: InputDtoRetrieve) -> str:
-        output: dict = self.repository.get_saved_calculations(
-            amount=input_dto.amount_of_results, flag=input_dto.tail_or_head_flag
+    def retrieve_prev_calculations(self,
+                                   input_dto: InputDtoRetrieve) -> dict:
+        output: list = self.repository.get_saved_calculations(
+            amount=input_dto.amount_of_results,
+            flag=input_dto.tail_or_head_flag
         )
         return self.presenter.present(OutputDto(output=output))

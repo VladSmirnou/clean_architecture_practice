@@ -1,10 +1,14 @@
 from use_cases.dto.input_dto import InputDto, InputDtoRetrieve
-from infrastructure.cli_app.interfaces.controller_interface import \
-    ICliController
+from infrastructure.flask_app.interfaces.controller_interface import \
+    IFlaskController
 from use_cases.interfaces.use_case_interface import I_InputBoundary
 
 
-class CliController(ICliController):
+# Такое ощущение, что этот контроллер здесь лишний, т.к.
+# приходится роутить реквест еще раз. Скорее всего надо
+# просто вызывать use_cases прямо с роутов или как-то еще, но
+# пока оставлю так.
+class FlaskController(IFlaskController):
     use_case_obj: I_InputBoundary
 
     def __init__(self, use_case: I_InputBoundary) -> None:
