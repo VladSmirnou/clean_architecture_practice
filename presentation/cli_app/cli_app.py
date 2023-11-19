@@ -23,7 +23,7 @@ class RunnableCli:
     def get_operation_type(self) -> str:
         return input('What do you wanna do?: ')
 
-    def run(self) -> None:
+    def run(self) -> str:
         match self.get_operation_type():
             case 'calculate_result':
                 user_input: dict = self.calculate_result()
@@ -34,7 +34,8 @@ class RunnableCli:
             case _:
                 print('Operation doesn\'t exist')
                 exit()
-        print(self.controller.process_data(user_input))
+        res: dict = self.controller.process_data(user_input)
+        return res['response']
 
     def calculate_result(self) -> dict:
         first_number: str = input('first_number: ')
