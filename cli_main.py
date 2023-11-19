@@ -14,6 +14,6 @@ from presentation.cli_app.cli_app import CliApp
 # and passes it to the View (if exists; if not, then return the data directly)
 # 5) The View then just shows (render) the result of the request to the user.
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     cli_calculator_app = CliApp().create_app()
-    cli_calculator_app.run()
+    print(cli_calculator_app.run())
