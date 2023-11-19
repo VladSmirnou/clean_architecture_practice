@@ -7,7 +7,7 @@ from infrastructure.repository.interfaces.postgres_db_connector_interface import
 class PostgresDbConnector(IPostgresDbConnector):
     session: SetupPostgresDb
 
-    def __init__(self, postgres_instanse) -> None:
+    def __init__(self, postgres_instanse: SetupPostgresDb) -> None:
         self.session = postgres_instanse
 
     def get_saved_calculations(
