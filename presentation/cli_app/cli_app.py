@@ -1,15 +1,22 @@
-from infrastructure.cli_app.interfaces.controller_interface import ICliController
+from infrastructure.cli_app.interfaces.controller_interface import \
+    ICliController
 from infrastructure.cli_app.controller.controller import CliController
-from presentation.db.in_memory_db_connector import InMemoryDbConnector
-from presentation.db.in_memory_db import InMemoryDB
-from infrastructure.repository.repository import InMemoryRepository
+from presentation.db.in_memory_db.in_memory_db_connector import \
+    InMemoryDbConnector
+from presentation.db.in_memory_db.in_memory_db import InMemoryDB
+from infrastructure.repository.in_memory_repo.in_memory_repository import \
+    InMemoryRepository
 from infrastructure.cli_app.presenter.presenter import CliPresenter
 from presentation.cli_app.view import CliView
+from use_cases.use_case import UseCase
+
 
 # As I can understand this is my so called 'Delivery mechanism' or 'IO device'
 # that takes an input from the user and calls the Сontroller.
 
 class RunnableCli:
+    controller: ICliController
+
     def __init__(self, controller: ICliController) -> None:
         self.controller = controller
 
@@ -64,12 +71,14 @@ class CliApp:
     def create_app(self) -> RunnableCli:
         return RunnableCli(
             controller=CliController(
-                presenter=CliPresenter(
-                    cli_view_obj=CliView()
-                ),
-                repository=InMemoryRepository(
-                    db_connector=InMemoryDbConnector(
-                        db_engine=InMemoryDB()
+                use_case=UseCase(
+                    presenter=CliPresenter(
+                        cli_view_obj=CliView()
+                    ),
+                    repository=InMemoryRepository(
+                        db_connector=InMemoryDbConnector(
+                            db_engine=InMemoryDB()
+                        )
                     )
                 )
             )
