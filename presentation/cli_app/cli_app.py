@@ -59,8 +59,12 @@ class RunnableCli:
         }
 
     def retrieve_prev_calculations(self) -> dict:
-        amount_of_results: str = input('How many results do you want to retrieve?: ')
-        tail_or_head_flag: str = input('From the head or tail? (-h is a default) [-h/-t]: ')
+        amount_of_results: str = input(
+            'How many results do you want to retrieve?: '
+        )
+        tail_or_head_flag: str = input(
+            'From the head or tail? (-h is a default) [-h/-t]: '
+        )
         return {
             'amount_of_results': amount_of_results,
             'tail_or_head_flag': tail_or_head_flag
