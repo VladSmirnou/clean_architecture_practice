@@ -9,19 +9,19 @@
 from entities.entities import Calculator
 from use_cases.dto.input_dto import InputDto, InputDtoRetrieve
 from use_cases.dto.output_dto import OutputDto
-from use_cases.interfaces.cli_presenter_interface import IOutputBoundary
-from use_cases.interfaces.cli_use_case_interface import I_InputBoundary
-from use_cases.interfaces.cli_repo_interface import I_InMemoryRepository
+from use_cases.interfaces.presenter_interface import IOutputBoundary
+from use_cases.interfaces.use_case_interface import I_InputBoundary
+from use_cases.interfaces.repo_interface import IRepository
 
 
 class UseCase(I_InputBoundary):
     presenter: IOutputBoundary
-    repository: I_InMemoryRepository
+    repository: IRepository
     entity_obj: Calculator
 
     def __init__(self,
                  presenter: IOutputBoundary,
-                 repository: I_InMemoryRepository) -> None:
+                 repository: IRepository) -> None:
         self.presenter = presenter
         self.repository = repository
         self.entity_obj = self.make_entity_obj()
