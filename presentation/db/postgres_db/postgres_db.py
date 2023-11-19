@@ -3,11 +3,11 @@ from typing import Union, Any
 
 
 DSN: str = (
-    'host=localhost '
-    'dbname=applicationdb '
-    'user=postgres '
-    'password=NmLo12b#1%^qB@ '  # CUT ITTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT OUUUUUUTTTTTT
-    'port=5432'
+    'host= '
+    'dbname= '
+    'user= '
+    'password= '
+    'port='
 )
 
 
