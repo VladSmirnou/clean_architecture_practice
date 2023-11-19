@@ -1,5 +1,6 @@
-from use_cases.interfaces.cli_presenter_interface import IOutputBoundary
 from use_cases.dto.output_dto import OutputDto
+from infrastructure.cli_app.templates.templates import templates
+from use_cases.interfaces.presenter_interface import IOutputBoundary
 from infrastructure.cli_app.interfaces.view_interface import ICliView
 
 
@@ -9,14 +10,26 @@ class CliPresenter(IOutputBoundary):
     def __init__(self, cli_view_obj: ICliView) -> None:
         self.cli_view_obj = cli_view_obj
 
-    def present(self, output_dto: OutputDto) -> str:
+    def present(self, output_dto: OutputDto) -> dict:
+        # Не знаю, как убрать зависимость от типа 'output' тут.
+        # Видимо что-то не так где-то сделал изначально.
+        # Cоздавать use_case и прокидывать разные
+        # презентеры, вью и т.д. для каждого роута отдельно мне кажется
+        # слишком медленно. Даже с таким маленьким приложением уже видна
+        # задержка в доли секунды при его запуске из-за создания всех объектов.
         match output_dto:
             case OutputDto(output=int(value)):
-                return self.cli_view_obj.render(
-                    'The result is: %(output)d', {'output': value}
-                )
-            case OutputDto(output=dict()):
-                result_list = [f'{key} = {val}' for key, val in output_dto.output.items()]
-                return self.cli_view_obj.render(
-                    'You saved results: %(output)s', {'output': str(result_list)}
-                )
+                return {
+                    'response': self.cli_view_obj.render(
+                        templates['single_value_res'], {'output': value}
+                    )
+                }
+            case OutputDto(output=list(res_list)):
+                return {
+                    'response': self.cli_view_obj.render(
+                        templates['list_res'], {
+                            'output': str(res_list)
+                        }
+                    )
+                }
+            case _: raise ValueError
