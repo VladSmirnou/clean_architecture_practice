@@ -29,7 +29,7 @@ class UseCase(I_InputBoundary):
     def make_entity_obj(self) -> Calculator:
         return Calculator()
 
-    def calculate_result(self, input_dto: InputDto) -> str:
+    def calculate_result(self, input_dto: InputDto) -> dict:
         output: int = 0
         match input_dto.to_dict():
             case {'operator': '+', **rest}:
@@ -40,7 +40,7 @@ class UseCase(I_InputBoundary):
                 ...
         return self.presenter.present(OutputDto(output=output))
 
-    def calculate_result_and_save(self, input_dto: InputDto) -> str:
+    def calculate_result_and_save(self, input_dto: InputDto) -> dict:
         output: int = 0
         data: dict = input_dto.to_dict()
         match data:
@@ -54,8 +54,10 @@ class UseCase(I_InputBoundary):
                 ...
         return self.presenter.present(OutputDto(output=output))
 
-    def retrieve_prev_calculations(self, input_dto: InputDtoRetrieve) -> str:
-        output: dict = self.repository.get_saved_calculations(
-            amount=input_dto.amount_of_results, flag=input_dto.tail_or_head_flag
+    def retrieve_prev_calculations(self,
+                                   input_dto: InputDtoRetrieve) -> dict:
+        output: list = self.repository.get_saved_calculations(
+            amount=input_dto.amount_of_results,
+            flag=input_dto.tail_or_head_flag
         )
         return self.presenter.present(OutputDto(output=output))
