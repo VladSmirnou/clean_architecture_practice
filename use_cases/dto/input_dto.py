@@ -10,7 +10,7 @@ class InputDto(BaseModel):
         return self.__dict__
 
     @classmethod
-    def from_dict(cls, data: dict):
+    def from_dict(cls, data: dict) -> 'InputDto':
         return cls(**data)
 
 
@@ -19,5 +19,5 @@ class InputDtoRetrieve(BaseModel):
     tail_or_head_flag: str
 
     @classmethod
-    def from_dict(cls, data: dict):
+    def from_dict(cls, data: dict) -> 'InputDtoRetrieve':
         return cls(**data)
