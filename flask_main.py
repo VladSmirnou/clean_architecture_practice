@@ -8,6 +8,7 @@ from infrastructure.repository.postgres_repo.postgres_repository import \
 from presentation.db.postgres_db.postgres_db_connector import \
     PostgresDbConnector
 from presentation.db.postgres_db.postgres_db import SetupPostgresDb
+from infrastructure.repository.sql_alc_repo.sql_alc_repo import SqlAlcRepository
 
 
 def handle_script_exit():
@@ -15,6 +16,18 @@ def handle_script_exit():
 
 
 if __name__ == '__main__':
+    # ------- SQL alchemy && Postgres repository -------
+    flask_calculator_app = init_app(
+        controller=FlaskController(
+            use_case=UseCase(
+                presenter=FlaskPresenter(),
+                repository=SqlAlcRepository()
+            )
+        )
+    )
+    # -------------------------------------
+
+    # ------- Postgres repository -------
     flask_calculator_app = init_app(
         controller=FlaskController(
             use_case=UseCase(
@@ -28,4 +41,5 @@ if __name__ == '__main__':
         )
     )
     atexit.register(handle_script_exit)
+    # -------------------------------------
     flask_calculator_app.run(debug=True)
