@@ -17,14 +17,14 @@ class CliPresenter(IOutputBoundary):
         # презентеры, вью и т.д. для каждого роута отдельно мне кажется
         # слишком медленно. Даже с таким маленьким приложением уже видна
         # задержка в доли секунды при его запуске из-за создания всех объектов.
-        match output_dto:
-            case OutputDto(output=int(value)):
+        match output_dto.output:
+            case int(value):
                 return {
                     'response': self.cli_view_obj.render(
                         templates['single_value_res'], {'output': value}
                     )
                 }
-            case OutputDto(output=list(res_list)):
+            case list(res_list):
                 return {
                     'response': self.cli_view_obj.render(
                         templates['list_res'], {
