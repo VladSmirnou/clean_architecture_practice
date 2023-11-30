@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
 
-class ICliView(ABC):
+class CliViewInterface(ABC):
     @abstractmethod
-    def render(self, tmpl: str, data: dict) -> str: ...
+    def render(self, data: dict) -> str: ...

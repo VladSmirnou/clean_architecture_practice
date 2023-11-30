@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class IRepository(ABC):
+class RepositoryInterface(ABC):
     @abstractmethod
     def get_saved_calculations(
         self, amount: int, flag: str) -> list: ...
