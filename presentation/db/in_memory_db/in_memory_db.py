@@ -1,11 +1,16 @@
-import itertools
+import collections
+import datetime
 
 
 class InMemoryDB:
     def __init__(self) -> None:
-        self.previous_calculation_results: dict[str, str] = {
-            '1 + 2': '3',
-            '2 - 1': '1',
+        self.previous_calculation_results: dict = {
+            '1 + 2': collections.namedtuple(
+                'Temp', 'res, date'
+            )(res='3', date=datetime.date.today()),
+            '2 - 1': collections.namedtuple(
+                'Temp', 'res, date'
+            )(res='1', date=datetime.date.today()),
         }
 
     def create_session(self) -> 'InMemoryDB':
@@ -18,25 +23,22 @@ class InMemoryDB:
         match query, params:
             case 'select * from calculations', {'flag': '' | '-h',
                                                 'amount': amount}:
-                return self.create_list(
-                    self.previous_calculation_results
+                return list(
+                    self.previous_calculation_results.items()
                 )[:amount]
             case 'select * from calculations', {'flag': '-t',
                                                 'amount': amount}:
                 len_ = len(self.previous_calculation_results)
-                return self.create_list(
-                    self.previous_calculation_results
+                return list(
+                    self.previous_calculation_results.items()
                 )[len_ - amount:]
             case 'insert into calculations', _:
-                key = f'{params["number_one"]} {params["operator"]} {params["number_two"]}'
+                key = (f'{params["number_one"]} '
+                       f'{params["operator"]} '
+                       f'{params["number_two"]}')
                 self.previous_calculation_results.update(
-                    {key: params["output"]}
+                    {key: collections.namedtuple(
+                        'Temp', 'res, date'
+                    )(res=params["output"], date=datetime.date.today())}
                 )
             case _: raise ValueError
-
-    def create_list(self, dict_: dict) -> list:
-        return list(
-            itertools.starmap(
-                lambda operands, res: f'{operands} = {res}', dict_.items()
-            )
-        )
