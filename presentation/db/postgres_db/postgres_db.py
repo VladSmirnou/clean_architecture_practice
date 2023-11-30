@@ -3,11 +3,11 @@ from typing import Union, Any
 
 
 DSN: str = (
-    'host= '
-    'dbname= '
-    'user= '
+    'host=localhost '
+    'dbname=applicationdb '
+    'user=postgres '
     'password= '
-    'port='
+    'port=5432'
 )
 
 
@@ -25,7 +25,8 @@ class SetupPostgresDb:
 
     def create_tables(self) -> None:
         self.cur.execute("""create table if not exists calculations (
-            results text
+            results text,
+            date_calculated date default current_date
         );
         """)
         self.conn.commit()
