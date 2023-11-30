@@ -1,5 +1,5 @@
-from infrastructure.repository.interfaces.in_memory_db_connector_interface import \
-    I_InMemoryDbConnector
+from infrastructure.repositories.interfaces.\
+    in_memory_db_connector_interface import I_InMemoryDbConnector
 from presentation.db.in_memory_db.in_memory_db import InMemoryDB
 
 
