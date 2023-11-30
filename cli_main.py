@@ -1,4 +1,4 @@
-from presentation.cli_app.cli_app import CliApp
+from presentation.cli_app.app import CliApp
 
 #  Simple calculator using clean arc
 # -------------------------------------------------
